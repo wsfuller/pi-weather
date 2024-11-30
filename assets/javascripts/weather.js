@@ -24,8 +24,13 @@ async function getWeather() {
 
     const json = await response.json();
     console.log('json', json);
-    const temperature = Math.floor(json.main.temp);
-    const temperatureElement = document.querySelector('#temperature').innerHTML = `${temperature} &deg;F`;
+    const minTemperature = Math.floor(json.main.temp_min);
+    const mainTemperature = Math.floor(json.main.temp);
+    const maxTemperature = Math.floor(json.main.temp_max);
+
+    document.querySelector('#min-temperature').innerHTML = `${minTemperature}&deg;F`;
+    document.querySelector('#main-temperature').innerHTML = `${mainTemperature}&deg;F`;
+    document.querySelector('#max-temperature').innerHTML = `${maxTemperature}&deg;F`;
 
     const convertedSunrise = convertUnixTime(json.sys.sunrise);
     const convertedSunset = convertUnixTime(json.sys.sunset);
@@ -34,6 +39,8 @@ async function getWeather() {
 
     const sunriseUnixTime = json.sys.sunrise;
     const sunsetUnixTime = json.sys.sunset;
+
+
 
     setTimeOfDay(sunriseUnixTime, sunsetUnixTime);
 

@@ -4,7 +4,26 @@
   justify-content: center;
   align-items: center;
 }
-#temperature {
+.temperature-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.temperature-with-label {
+  display: flex;
+  align-items: center;
+  margin-right: 0.5rem;
+}
+
+.temperature-with-label > span {
+  font-size: 0.75rem;
+  margin-right: 0.25rem;
+}
+
+#main-temperature {
+  margin: 0 1rem;
   font-size: 4rem;
 }
 
