@@ -1,0 +1,56 @@
+:root {
+  --angle: 0deg;
+  --white: #ffffff;
+  --black: #1c1c1c;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100vh;
+  font-family: "Varela Round", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+/* BACKGROUNDS */
+.sunrise {
+  background: linear-gradient(var(--angle), rgb(100% 56.1% 56.1%), rgb(100% 98.8% 60%));
+  background: linear-gradient(var(--angle), #ff8f8f, #fffc99);
+}
+
+.noon {
+  background: linear-gradient(var(--angle), rgb(29.4% 45.9% 91%), rgb(32.9% 75.3% 100%));
+ background: linear-gradient(var(--angle), #4b75e8, #54c0ff);
+}
+
+.sunset {
+  background: linear-gradient(var(--angle), rgb(98.4% 69% 23.1%), rgb(92.9% 11% 14.1%));
+  background: linear-gradient(var(--angle), #FBB03B, #ED1C24)
+}
+
+.nighttime {
+  background: linear-gradient(var(--angle), rgb(11.8% 23.5% 44.7%), rgb(16.5% 32.2% 59.6%));
+  background: linear-gradient(var(--angle), #1e3c72, #2a5298);
+}
+
+.midnight {
+  color: var(--white);
+  background: linear-gradient(var(--angle), rgb(11% 12.5% 32.2%), rgb(25.5% 5.49% 42%), rgb(31.4% 14.5% 43.9%));
+ background: linear-gradient(var(--angle), #1c2052, #410e6b, #502570)
+}
+
+
+

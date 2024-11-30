@@ -1,0 +1,77 @@
+#clock-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 550px;
+  margin: 0 auto;
+  /* border: 2px solid var(--gray-color); */
+  /* border-radius: .25rem; */
+  margin-bottom: 2rem;
+}
+
+#clock-container #daysOfWeek {
+  display: flex;
+}
+
+#clock-container #daysOfWeek .day {
+  width: 60px;
+  text-align: center;
+  opacity: 0.3;
+}
+
+#clock-container #daysOfWeek .day.active {
+  opacity: 1;
+}
+
+#clock-container #clock {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  font-size: 3rem;
+}
+
+#clock-container .label {
+  width: 5.5rem;
+  text-align: center;
+}
+
+#clock-container #ampm {
+  position: absolute;
+  bottom: 0.65rem;
+  right: -2.25rem;
+  font-size: 1.75rem;
+}
+
+#clock-container #monthAndYear {
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  opacity: 0.6;
+}
+
+#clock-container #timeFormatButton {
+  position: absolute;
+  width: 4rem;
+  bottom: 0.25rem;
+  left: 0.25rem;
+  font-size: .75rem;
+  padding: 0.25rem;
+  background: transparent;
+  border-radius: 0.25rem;
+  border: 1px solid;
+}
+
+#clock-container #timeFormatButton:hover {
+  cursor: pointer;
+  background: var(--white-color)
+}
+
+#clock-container #month {
+  margin-right: 0.5rem;
+}
+
+#clock-container #day {
+  margin-right: 0.25rem;
+}
+

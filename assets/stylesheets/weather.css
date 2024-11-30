@@ -1,0 +1,32 @@
+#weather-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+#temperature {
+  font-size: 4rem;
+}
+
+.sunrise-sunset {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.icon-stack {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+}
+
+.icon-stack .icon {
+  width: 4rem;
+  height: 3rem;
+  margin: auto;
+}
+
+.icon-stack .label {
+  font-size: 1.25rem;
+}

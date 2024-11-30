@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Varela+Round&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./assets/stylesheets/base.css">
+  <link rel="stylesheet" href="./assets/stylesheets/clock.css">
+  <link rel="stylesheet" href="./assets/stylesheets/weather.css">
+
+  <title>Pi Weather</title>
+</head>
+
+<body class="sunrise">
+    <div class="container">
+      <!-- Clock -->
+      <div id="clock-container">
+        <div id="daysOfWeek">
+          <div id="sunday" class="day">SUN</div>
+          <div id="monday" class="day">MON</div>
+          <div id="tuesday" class="day">TUE</div>
+          <div id="wednesday" class="day">WED</div>
+          <div id="thursday" class="day">THU</div>
+          <div id="friday" class="day">FRI</div>
+          <div id="saturday" class="day">SAT</div>
+        </div>
+        <div id="clock">
+          <div class="label">
+            <div id="hours"></div>
+          </div>
+          <div class="clock-divider">:</div>
+          <div class="label">
+            <div id="minutes"></div>
+          </div>
+          <div class="clock-divider">:</div>
+          <div class="label">
+            <div id="seconds"></div>
+          </div>
+
+          <div id="ampm"></div>
+        </div>
+        <div id="monthAndYear">
+          <div id="month"></div>
+          <div id="day"></div>
+          <div id="year"></div>
+        </div>
+      </div>
+      <!-- Weather -->
+      <div id="weather-container">
+        <div id="temperature"></div>
+        <div id="weather-icon"></div>
+        <div class="sunrise-sunset">
+          <div id="sunrise" class="icon-stack">
+            <div class="icon">
+              <img src="./assets/icons/sunrise.svg" />
+            </div>
+            <div class="label"></div>
+          </div>
+          <div id="sunset" class="icon-stack">
+            <div class="icon">
+              <img src="./assets/icons/sunset.svg" />
+            </div>
+            <div class="label"></div>
+          </div>
+        </div>
+
+
+        <div id="location">Seattle, WA</div>
+      </div>
+
+      <!-- TODO -->
+       <!-- Add one hour before and after sunrise, sunset, noon, midnight. Default day and night -->
+        <!-- Add icons for the weather -->
+         <!-- Add humidity and chance of rain -->
+          <!-- Add 4 day forecast -->
+           <!-- Adding polling to the API once an hour -->
+
+      <script src="./assets/javascripts/clock.js"></script>
+      <script src="./assets/javascripts/weather.js"></script>
+</body>
+
+</html>
+
+
