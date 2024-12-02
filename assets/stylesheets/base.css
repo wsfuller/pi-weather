@@ -38,6 +38,7 @@ img {
 }
 
 .noon {
+  color: var(--white);
   background: linear-gradient(var(--angle), rgb(29.4% 45.9% 91%), rgb(32.9% 75.3% 100%));
  background: linear-gradient(var(--angle), #4b75e8, #54c0ff);
 }

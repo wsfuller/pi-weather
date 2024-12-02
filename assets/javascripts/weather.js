@@ -107,7 +107,6 @@ function setTimeOfDay(sunriseUnixTime, sunsetUnixTime) {
   const midnightUnixTime = Math.floor(midnight.getTime() / 1000);
 
   const oneHour = 3600;
-  const twoHours = 7200;
 
   // If daytime
   if (now >= sunriseUnixTime - oneHour && now < sunsetUnixTime + oneHour) {
