@@ -107,24 +107,18 @@ function setTimeOfDay(sunriseUnixTime, sunsetUnixTime) {
   const midnightUnixTime = Math.floor(midnight.getTime() / 1000);
 
   const oneHour = 3600;
+  const twoHours = 7200;
 
   // If daytime
-  if (now <= sunriseUnixTime - oneHour && now < sunsetUnixTime + oneHour) {
+  if (now >= sunriseUnixTime - oneHour && now < sunsetUnixTime + oneHour) {
     console.log('daytime');
     console.log('now', now);
     // Sunrise +/- 1 hour
-    if (now <= sunriseUnixTime - oneHour || now >= sunriseUnixTime + oneHour) {
+    if (now >= sunriseUnixTime - oneHour && now <= sunriseUnixTime + oneHour) {
       console.log('sunrise');
       console.log('now', now);
       document.body.className = "";
       document.body.classList.add('sunrise');
-    }
-    // Noon +/- 1 hour
-    if (now >= noonUnixTime - oneHour && now <= noonUnixTime + oneHour) {
-      console.log('noon');
-      console.log('now', now);
-      document.body.className = "";
-      document.body.classList.add('noon');
     }
     // Sunset +/- 1 hour
     if (now >= sunsetUnixTime - oneHour && now <= sunsetUnixTime + oneHour) {
@@ -132,6 +126,11 @@ function setTimeOfDay(sunriseUnixTime, sunsetUnixTime) {
       console.log('now', now);
       document.body.className = "";
       document.body.classList.add('sunset');
+    } else {
+      console.log('noon');
+      console.log('now', now);
+      document.body.className = "";
+      document.body.classList.add('noon');
     }
   }
   // If eventing
@@ -147,7 +146,6 @@ function setTimeOfDay(sunriseUnixTime, sunsetUnixTime) {
       document.body.className = "";
       document.body.classList.add('nighttime');
     }
-
   }
 }
 
