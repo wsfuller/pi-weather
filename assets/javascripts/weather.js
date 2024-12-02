@@ -46,8 +46,8 @@ async function getWeather() {
     console.error(error.message);
   }
 
-  // Check every hour
-  setTimeout(getWeather, 3600000);
+  // Check every 30 minutes
+  setTimeout(getWeather, 30 * 60 * 1000);
 }
 
 function getWeatherIcon(weather, sunriseUnixTime, sunsetUnixTime) {
@@ -95,7 +95,6 @@ function getWeatherIcon(weather, sunriseUnixTime, sunsetUnixTime) {
 }
 
 function setTimeOfDay(sunriseUnixTime, sunsetUnixTime) {
-  console.log('get time of day');
   const date = new Date();
   const now = Math.floor(Date.now() / 1000);
   const noon = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 12, 0, 0);
@@ -146,9 +145,6 @@ function setTimeOfDay(sunriseUnixTime, sunsetUnixTime) {
     }
 
   }
-
-  // Check every 5 minutes
-  setTimeout(setTimeOfDay, 300000);
 }
 
 function convertUnixTime(unixTime) {
