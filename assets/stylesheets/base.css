@@ -17,6 +17,12 @@ html, body {
   font-style: normal;
 }
 
+img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
 .container {
   display: flex;
   flex-direction: column;
@@ -42,6 +48,7 @@ html, body {
 }
 
 .nighttime {
+  color: var(--white);
   background: linear-gradient(var(--angle), rgb(11.8% 23.5% 44.7%), rgb(16.5% 32.2% 59.6%));
   background: linear-gradient(var(--angle), #1e3c72, #2a5298);
 }

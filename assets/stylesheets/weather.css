@@ -4,6 +4,7 @@
   justify-content: center;
   align-items: center;
 }
+
 .temperature-container {
   display: flex;
   flex-direction: row;
@@ -11,19 +12,30 @@
   justify-content: center;
 }
 
+.weather-icon-container {
+  width: 5rem;
+  height: 5rem;
+}
+
+.meta-temperatures {
+  display: flex;
+  flex-direction: column;
+}
+
 .temperature-with-label {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   margin-right: 0.5rem;
 }
 
 .temperature-with-label > span {
-  font-size: 0.75rem;
+  font-size: 0.625rem;
   margin-right: 0.25rem;
 }
 
 #main-temperature {
-  margin: 0 1rem;
+  margin: 0 1rem 0 0.5rem;
   font-size: 4rem;
 }
 

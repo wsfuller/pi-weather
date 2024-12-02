@@ -51,22 +51,29 @@
       <!-- Weather -->
       <div id="weather-container">
         <div class="temperature-container">
-          <div class="temperature-with-label">
-            <span>Low:</span>
-            <div id="min-temperature"></div>
+          <div class="weather-icon-container">
+            <img id="weather-icon" src="./assets/icons/cloudy.svg" />
           </div>
           <div id="main-temperature"></div>
-          <div class="temperature-with-label">
-            <span>High:</span>
-            <div id="max-temperature"></div>
+          <div class="meta-temperatures">
+            <div class="temperature-with-label">
+              <span>High:</span>
+              <div id="max-temperature"></div>
+            </div>
+            <div class="temperature-with-label">
+              <span>Feels like:</span>
+              <div id="feels-like-temperature"></div>
+            </div>
+            <div class="temperature-with-label">
+              <span>Low:</span>
+              <div id="min-temperature"></div>
+            </div>
           </div>
-
         </div>
-        <div id="weather-icon"></div>
         <div class="sunrise-sunset">
           <div id="sunrise" class="icon-stack">
             <div class="icon">
-              <img src="./assets/icons/sunrise.svg" />
+              <img src="./assets/icons/sunrise.svg" alt="" />
             </div>
             <div class="label"></div>
           </div>
@@ -84,7 +91,6 @@
 
       <!-- TODO -->
        <!-- Add one hour before and after sunrise, sunset, noon, midnight. Default day and night -->
-        <!-- Add icons for the weather -->
          <!-- Add humidity and chance of rain -->
           <!-- Add 4 day forecast -->
            <!-- Adding polling to the API once an hour -->
