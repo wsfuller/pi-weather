@@ -72,6 +72,10 @@ function getWeatherIcon(weather, sunriseUnixTime, sunsetUnixTime) {
       iconElement.src = `${iconPath}drizzle.svg`;
       iconElement.alt = weather.description;
       break;
+    case 'Fog':
+      iconElement.src = `${iconPath}fog.svg`;
+      iconElement.alt = weather.description;
+      break;
     case 'Mist':
       iconElement.src = `${iconPath}mist.svg`;
       iconElement.alt = weather.description;
