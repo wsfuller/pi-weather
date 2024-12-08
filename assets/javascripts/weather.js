@@ -1,5 +1,4 @@
 (function(){
-console.log('weather.js');
 const API_KEY = '00ffe67401ef889e85434ae98183c43e';
 const DEFAULT_LAT = 47.6038321;
 const DEFAULT_LON = -122.330062;

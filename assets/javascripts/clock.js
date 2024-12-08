@@ -1,5 +1,4 @@
 (function clock() {
-  const clockElement = document.querySelector('#clock');
   const clockHours = document.querySelector('#hours');
   const clockMinutes = document.querySelector('#minutes');
   const clockSeconds = document.querySelector('#seconds');
@@ -16,13 +15,22 @@
     const dayOfWeek = date.getDay();
     const dayOfWeekElement = document.querySelector(`#${DAYS_OF_WEEK[dayOfWeek]}`);
     const hours = date.getHours();
-    const minutes = clockMinutes.innerHTML = date.getMinutes().toString().padStart(2, '0');
-    const seconds = clockSeconds.innerHTML = date.getSeconds().toString().padStart(2, '0');
     const month = date.getMonth();
-    const monthElement = document.querySelector('#month').innerHTML = (`${MONTHS[month]}`);
     const day = date.getDate();
-    const dayElement = document.querySelector('#day').innerHTML = `${day},`;
-    const year = document.querySelector('#year').innerHTML = date.getFullYear();
+
+    clockMinutes.innerHTML = date.getMinutes().toString().padStart(2, '0');
+    clockSeconds.innerHTML = date.getSeconds().toString().padStart(2, '0');
+    document.querySelector('#month').innerHTML = (`${MONTHS[month]}`);
+    document.querySelector('#day').innerHTML = `${day},`;
+    document.querySelector('#year').innerHTML = date.getFullYear();
+
+    const daysOfWeekElements = document.querySelectorAll('.day');
+
+    daysOfWeekElements.forEach(day => {
+      if (day.classList.contains('active')){
+        day.classList.remove('active');
+      }
+    })
 
     dayOfWeekElement.classList.add('active');
 
@@ -30,7 +38,11 @@
       clockHours.innerHTML = (hours - 12).toString().padStart(2, '0');
       clockAmPm.innerHTML = 'PM';
     } else {
-      clockHours.innerHTML = hours.toString().padStart(2, '0');
+      if (hours === 12) {
+       clockHours.innerHTML = '12';
+      } else {
+        clockHours.innerHTML = hours.toString().padStart(2, '0');
+      }
       clockAmPm.innerHTML = 'AM';
     }
 
