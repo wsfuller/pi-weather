@@ -53,7 +53,7 @@ async function getWeather() {
 function getWeatherIcon(weather, sunriseUnixTime, sunsetUnixTime) {
   const iconPath = './assets/icons/';
   const iconElement = document.querySelector('#weather-icon');
-  const timeNow = new Date.now() / 1000;
+  const timeNow = Date.now() / 1000;
 
   switch (weather.main){
     case 'Clear':
@@ -101,8 +101,6 @@ function getWeatherIcon(weather, sunriseUnixTime, sunsetUnixTime) {
 function setTimeOfDay(sunriseUnixTime, sunsetUnixTime) {
   const date = new Date();
   const now = Math.floor(Date.now() / 1000);
-  const noon = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 12, 0, 0);
-  const noonUnixTime = Math.floor(noon.getTime() / 1000);
   const midnight = new Date(date.getFullYear(), date.getMonth(), date.getDate());
   const midnightUnixTime = Math.floor(midnight.getTime() / 1000);
 
@@ -116,34 +114,39 @@ function setTimeOfDay(sunriseUnixTime, sunsetUnixTime) {
     if (now >= sunriseUnixTime - oneHour && now <= sunriseUnixTime + oneHour) {
       console.log('sunrise');
       console.log('now', now);
+
       document.body.className = "";
       document.body.classList.add('sunrise');
-    }
-    // Sunset +/- 1 hour
-    if (now >= sunsetUnixTime - oneHour && now <= sunsetUnixTime + oneHour) {
+      return;
+    } else if (now >= sunsetUnixTime - oneHour && now <= sunsetUnixTime + oneHour) {
+      // Sunset +/- 1 hour
       console.log('sunset');
       console.log('now', now);
       document.body.className = "";
       document.body.classList.add('sunset');
+      return;
     } else {
       console.log('noon');
       console.log('now', now);
       document.body.className = "";
       document.body.classList.add('noon');
+      return;
     }
   }
-  // If eventing
+  // If evening
   if (now >= sunsetUnixTime + oneHour) {
     if(now >= midnightUnixTime - oneHour && now <= midnightUnixTime + oneHour) {
       console.log('midnight');
       console.log('now', now);
       document.body.className = "";
       document.body.classList.add('midnight');
+      return;
     } else {
       console.log('evening');
       console.log('now', now);
       document.body.className = "";
       document.body.classList.add('nighttime');
+      return;
     }
   }
 }
