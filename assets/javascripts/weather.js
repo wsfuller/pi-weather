@@ -53,7 +53,7 @@ async function getWeather() {
 function getWeatherIcon(weather, sunriseUnixTime, sunsetUnixTime) {
   const iconPath = './assets/icons/';
   const iconElement = document.querySelector('#weather-icon');
-  const timeNow = Date.now() / 1000;
+  const timeNow = new Date.now() / 1000;
 
   switch (weather.main){
     case 'Clear':
