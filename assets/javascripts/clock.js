@@ -34,15 +34,17 @@
 
     dayOfWeekElement.classList.add('active');
 
-    if (hours > 12) {
+    if (hours >= 12) {
       clockHours.innerHTML = (hours - 12).toString().padStart(2, '0');
+      if (hours === 12) {
+        clockHours.innerHTML = '12';
+       }
       clockAmPm.innerHTML = 'PM';
     } else {
-      if (hours === 12) {
-       clockHours.innerHTML = '12';
-      } else {
-        clockHours.innerHTML = hours.toString().padStart(2, '0');
-      }
+      clockHours.innerHTML = hours.toString().padStart(2, '0');
+      if (hours === 0) {
+        clockHours.innerHTML = '12';
+       }
       clockAmPm.innerHTML = 'AM';
     }
 

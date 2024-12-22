@@ -1,23 +1,54 @@
-(function(){
+(async function(){
 const API_KEY = '00ffe67401ef889e85434ae98183c43e';
-const DEFAULT_LAT = 47.6038321;
-const DEFAULT_LON = -122.330062;
-const WEATHER_API_URL = `https://api.openweathermap.org/data/2.5/weather?lat=${DEFAULT_LAT}&lon=${DEFAULT_LON}&appid=${API_KEY}&units=imperial`;
 
-const DEFAULT_CITY = 'Seattle';
-const DEFAULT_STATE = 'WA';
-const LOCATION_API_URL = `http://api.openweathermap.org/geo/1.0/direct?q=${DEFAULT_CITY},${DEFAULT_STATE},1&appid=${API_KEY}`;
+const updateLocationButton = document.querySelector('#update-location-button');
+
+updateLocationButton.addEventListener('click', function() {
+  console.log('update location was clicked');
+  const cityValue = document.querySelector('#city-name').value;
+  const stateValue = document.querySelector('#state-select').value;
+
+  console.log('city value: ', cityValue);
+  console.log('state select value: ', stateValue);
+
+  if (cityValue !== '' && stateValue !== '') {
+    getLocation(cityValue, stateValue)
+  } else {
+    alert('Please enter a city and select a state')
+  }
+});
+
+async function getLocation(city, state) {
+  const DEFAULT_CITY = 'Seattle';
+  const DEFAULT_STATE = 'WA';
+  const LOCATION_API_URL = `http://api.openweathermap.org/geo/1.0/direct?q=${city},${state},1&appid=${API_KEY}`;
+
+  try {
+    const response = await fetch(LOCATION_API_URL);
+
+    if (!response.ok) {
+      throw new Error(`Response status: ${response.status}`);
+    }
+    const json = await response.json();
+    console.log('json: ', json)
+  } catch (error) {
+    console.error(error)
+  }
+}
 
 async function getWeather() {
-  const url = WEATHER_API_URL;
+  const DEFAULT_LAT = 47.6038321;
+  const DEFAULT_LON = -122.330062;
+  const WEATHER_API_URL = `https://api.openweathermap.org/data/2.5/weather?lat=${DEFAULT_LAT}&lon=${DEFAULT_LON}&appid=${API_KEY}&units=imperial`;
+
   try {
-    const response = await fetch(url);
+    const response = await fetch(WEATHER_API_URL);
     if (!response.ok) {
       throw new Error(`Response status: ${response.status}`);
     }
 
     const json = await response.json();
-    console.log('json', json);
+    // console.log('json', json);
 
     const mainTemperature = Math.floor(json.main.temp);
     const minTemperature = Math.floor(json.main.temp_min);
@@ -107,6 +138,7 @@ function setTimeOfDay(sunriseUnixTime, sunsetUnixTime) {
 
   // If daytime
   if (now >= sunriseUnixTime - oneHour && now < sunsetUnixTime + oneHour) {
+    debugger;
     console.log('daytime');
     console.log('now', now);
     // Sunrise +/- 1 hour
@@ -133,20 +165,19 @@ function setTimeOfDay(sunriseUnixTime, sunsetUnixTime) {
     }
   }
   // If evening
-  if (now >= sunsetUnixTime + oneHour) {
-    if(now >= midnightUnixTime - oneHour && now <= midnightUnixTime + oneHour) {
-      console.log('midnight');
-      console.log('now', now);
-      document.body.className = "";
-      document.body.classList.add('midnight');
-      return;
-    } else {
-      console.log('evening');
-      console.log('now', now);
-      document.body.className = "";
-      document.body.classList.add('nighttime');
-      return;
-    }
+  if(now >= midnightUnixTime - oneHour && now <= midnightUnixTime + oneHour) {
+    console.log('midnight');
+    console.log('now', now);
+    document.body.className = "";
+    document.body.classList.add('midnight');
+    return;
+  } else if (now >= sunsetUnixTime + oneHour) {
+    debugger;
+    console.log('evening');
+    console.log('now', now);
+    document.body.className = "";
+    document.body.classList.add('nighttime');
+    return;
   }
 }
 
@@ -163,5 +194,38 @@ function convertUnixTime(unixTime) {
   return `${hours}:${minutes}${amPm}`;
 }
 
+async function loadStateData() {
+  try {
+    const response = await fetch('./assets/data/states.json');
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! ${response.status}`)
+    }
+
+    states = await response.json();
+
+    setStateSelect(states);
+  } catch (error) {
+    console.error(`Error loading state data: ${error}`)
+  }
+};
+
+function setStateSelect(states) {
+  const selectElement = document.querySelector('#state-select');
+
+  states.forEach((state) => {
+    const newOption = document.createElement('option');
+    newOption.value = state.value;
+    newOption.text = state.name;
+
+    selectElement.appendChild(newOption);
+  });
+}
+
 getWeather();
+await loadStateData()
 })();
+
+function updateLocation() {
+  console.log('run updateLocation');
+}
