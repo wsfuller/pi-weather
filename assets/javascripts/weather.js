@@ -202,7 +202,7 @@ async function loadStateData() {
 
     states = await response.json();
 
-    setStateSelect(states);
+    //setStateSelect(states);
   } catch (error) {
     console.error(`Error loading state data: ${error}`)
   }
