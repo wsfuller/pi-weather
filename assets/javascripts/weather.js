@@ -1,22 +1,22 @@
 (async function(){
 const API_KEY = '00ffe67401ef889e85434ae98183c43e';
 
-const updateLocationButton = document.querySelector('#update-location-button');
+// const updateLocationButton = document.querySelector('#update-location-button');
 
-updateLocationButton.addEventListener('click', function() {
-  console.log('update location was clicked');
-  const cityValue = document.querySelector('#city-name').value;
-  const stateValue = document.querySelector('#state-select').value;
+// updateLocationButton.addEventListener('click', function() {
+//   console.log('update location was clicked');
+//   const cityValue = document.querySelector('#city-name').value;
+//   const stateValue = document.querySelector('#state-select').value;
 
-  console.log('city value: ', cityValue);
-  console.log('state select value: ', stateValue);
+//   console.log('city value: ', cityValue);
+//   console.log('state select value: ', stateValue);
 
-  if (cityValue !== '' && stateValue !== '') {
-    getLocation(cityValue, stateValue)
-  } else {
-    alert('Please enter a city and select a state')
-  }
-});
+//   if (cityValue !== '' && stateValue !== '') {
+//     getLocation(cityValue, stateValue)
+//   } else {
+//     alert('Please enter a city and select a state')
+//   }
+// });
 
 async function getLocation(city, state) {
   const DEFAULT_CITY = 'Seattle';
@@ -138,7 +138,6 @@ function setTimeOfDay(sunriseUnixTime, sunsetUnixTime) {
 
   // If daytime
   if (now >= sunriseUnixTime - oneHour && now < sunsetUnixTime + oneHour) {
-    debugger;
     console.log('daytime');
     console.log('now', now);
     // Sunrise +/- 1 hour
@@ -172,7 +171,6 @@ function setTimeOfDay(sunriseUnixTime, sunsetUnixTime) {
     document.body.classList.add('midnight');
     return;
   } else if (now >= sunsetUnixTime + oneHour) {
-    debugger;
     console.log('evening');
     console.log('now', now);
     document.body.className = "";
@@ -210,17 +208,17 @@ async function loadStateData() {
   }
 };
 
-function setStateSelect(states) {
-  const selectElement = document.querySelector('#state-select');
+// function setStateSelect(states) {
+//   const selectElement = document.querySelector('#state-select');
 
-  states.forEach((state) => {
-    const newOption = document.createElement('option');
-    newOption.value = state.value;
-    newOption.text = state.name;
+//   states.forEach((state) => {
+//     const newOption = document.createElement('option');
+//     newOption.value = state.value;
+//     newOption.text = state.name;
 
-    selectElement.appendChild(newOption);
-  });
-}
+//     selectElement.appendChild(newOption);
+//   });
+// }
 
 getWeather();
 await loadStateData()
