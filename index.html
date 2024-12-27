@@ -87,13 +87,21 @@
         </div>
 
 
-        <div id="location">Seattle, WA</div>
+        <div id="location">
+          <span class="city">Seattle,</span>
+          <span class="state">wa</span>
+          <button id="edit-location-button">
+            <img src="./assets/images/icons/edit.svg" alt="Edit Location" id="edit-location-icon" />
+          </button>
+        </div>
 
-        <!-- <input type="text" placeholder="City Name" id="city-name"/>
-        <select name="state-select" id="state-select">
-          <option value="">Select State</option>
-        </select>
-        <button type="button" id="update-location-button">Update Location</button> -->
+        <div class="location-input hidden">
+          <input type="text" placeholder="City Name" id="city-name"/>
+          <select name="state-select" id="state-select">
+            <option value="">Select State</option>
+          </select>
+          <button type="button" id="update-location-button">Update Location</button>
+        </div>
       </div>
 
       <!-- TODO -->

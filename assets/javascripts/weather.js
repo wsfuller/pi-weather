@@ -1,26 +1,37 @@
 (async function(){
 const API_KEY = '00ffe67401ef889e85434ae98183c43e';
 
-// const updateLocationButton = document.querySelector('#update-location-button');
+const editLocationButton = document.querySelector('#edit-location-button');
+const editLocationIcon = document.querySelector('#edit-location-icon');
+const updateLocationButton = document.querySelector('#update-location-button');
+const cityInput = document.querySelector('#city-name');
+const stateSelect = document.querySelector('#state-select');
+const editIconPath = '../assets/images/icons/edit.svg';
+const closeIconPath = '../assets/images/icons/close.svg';
 
-// updateLocationButton.addEventListener('click', function() {
-//   console.log('update location was clicked');
-//   const cityValue = document.querySelector('#city-name').value;
-//   const stateValue = document.querySelector('#state-select').value;
+editLocationButton.addEventListener('click', function() {
+  const locationInput = document.querySelector('.location-input');
+  if (locationInput.classList.contains('hidden')) {
+    locationInput.classList.remove('hidden');
+    editLocationIcon.src = closeIconPath;
+  } else {
+    locationInput.classList.add('hidden');
+    editLocationIcon.src = editIconPath;
+  }
+});
 
-//   console.log('city value: ', cityValue);
-//   console.log('state select value: ', stateValue);
+updateLocationButton.addEventListener('click', function() {
+  const cityValue = cityInput.value;
+  const stateValue = stateSelect.value;
 
-//   if (cityValue !== '' && stateValue !== '') {
-//     getLocation(cityValue, stateValue)
-//   } else {
-//     alert('Please enter a city and select a state')
-//   }
-// });
+  if (cityValue !== '' && stateValue !== '') {
+    getLocation(cityValue, stateValue)
+  } else {
+    alert('Please enter a city and select a state')
+  }
+});
 
 async function getLocation(city, state) {
-  const DEFAULT_CITY = 'Seattle';
-  const DEFAULT_STATE = 'WA';
   const LOCATION_API_URL = `http://api.openweathermap.org/geo/1.0/direct?q=${city},${state},1&appid=${API_KEY}`;
 
   try {
@@ -30,16 +41,33 @@ async function getLocation(city, state) {
       throw new Error(`Response status: ${response.status}`);
     }
     const json = await response.json();
-    console.log('json: ', json)
+    if (json.length === 0) {
+      throw new Error('No location found');
+    }
+
+    const { lat, lon } = json[0];
+
+    if (lat && lon) {
+      cityInput.value = '';
+      stateSelect.value = '';
+      document.querySelector('#location .city').innerHTML = `${city},`;
+      document.querySelector('#location .state').innerHTML = state;
+      getWeather(lat, lon);
+    } else {
+      throw new Error('No latitude and longitude found');
+    }
   } catch (error) {
+    alert(error);
     console.error(error)
   }
 }
 
-async function getWeather() {
+async function getWeather(lat, lon) {
   const DEFAULT_LAT = 47.6038321;
   const DEFAULT_LON = -122.330062;
-  const WEATHER_API_URL = `https://api.openweathermap.org/data/2.5/weather?lat=${DEFAULT_LAT}&lon=${DEFAULT_LON}&appid=${API_KEY}&units=imperial`;
+  const LAT = lat || DEFAULT_LAT;
+  const LON = lon || DEFAULT_LON;
+  const WEATHER_API_URL = `https://api.openweathermap.org/data/2.5/weather?lat=${LAT}&lon=${LON}&appid=${API_KEY}&units=imperial`;
 
   try {
     const response = await fetch(WEATHER_API_URL);
@@ -48,7 +76,6 @@ async function getWeather() {
     }
 
     const json = await response.json();
-    // console.log('json', json);
 
     const mainTemperature = Math.floor(json.main.temp);
     const minTemperature = Math.floor(json.main.temp_min);
@@ -202,28 +229,25 @@ async function loadStateData() {
 
     states = await response.json();
 
-    //setStateSelect(states);
+    setStateSelect(states);
   } catch (error) {
     console.error(`Error loading state data: ${error}`)
   }
 };
 
-// function setStateSelect(states) {
-//   const selectElement = document.querySelector('#state-select');
+function setStateSelect(states) {
+  const selectElement = document.querySelector('#state-select');
 
-//   states.forEach((state) => {
-//     const newOption = document.createElement('option');
-//     newOption.value = state.value;
-//     newOption.text = state.name;
+  states.forEach((state) => {
+    const newOption = document.createElement('option');
+    newOption.value = state.value;
+    newOption.text = state.name;
 
-//     selectElement.appendChild(newOption);
-//   });
-// }
+    selectElement.appendChild(newOption);
+  });
+}
 
 getWeather();
 await loadStateData()
 })();
 
-function updateLocation() {
-  console.log('run updateLocation');
-}

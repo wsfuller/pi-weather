@@ -60,5 +60,6 @@ img {
  background: linear-gradient(var(--angle), #1c2052, #410e6b, #502570)
 }
 
-
-
+.hidden {
+  display: none !important;
+}

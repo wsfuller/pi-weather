@@ -61,3 +61,67 @@
 .icon-stack .label {
   font-size: 1.25rem;
 }
+
+#location {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+#location .city {
+  margin-right: 0.25rem;
+  text-transform: capitalize;
+}
+
+#location .state {
+  margin-right: 0.25rem;
+  text-transform: uppercase;
+}
+
+#edit-location-button {
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: .125rem;
+  background: transparent;
+  border: none;
+}
+
+#edit-location-button:hover {
+  cursor: pointer;
+}
+
+.location-input {
+  display: flex;
+}
+
+.location-input #city-name {
+  margin-right: 0.5rem;
+  border-radius: 0.25rem;
+  padding: .5rem;
+  width: 12rem;
+  background-color: rgba(255, 255, 255, 0.25);
+  border: 0.125rem solid rgba(255, 255, 255, 1);
+  color: var(--white);
+}
+
+.location-input #city-name::placeholder {
+  color: var(--white);
+}
+
+.location-input #state-select {
+  margin-right: 0.5rem;
+  border-radius: 0.25rem;
+  padding: .5rem;
+  width: 8rem;
+  color: var(--white);
+  background-color: rgba(255, 255, 255, 0.25);
+  border: 0.125rem solid rgba(255, 255, 255, 1);
+}
+
+.location-input #update-location-button {
+  padding: 0.5rem;
+  color: var(--white);
+  border-radius: 0.25rem;
+  background-color: rgba(255, 255, 255, 0.25);
+  border: 0.125rem solid rgba(255, 255, 255, 1);
+}
