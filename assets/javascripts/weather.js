@@ -6,8 +6,8 @@ const editLocationIcon = document.querySelector('#edit-location-icon');
 const updateLocationButton = document.querySelector('#update-location-button');
 const cityInput = document.querySelector('#city-name');
 const stateSelect = document.querySelector('#state-select');
-const editIconPath = '../assets/images/icons/edit.svg';
-const closeIconPath = '../assets/images/icons/close.svg';
+const editIconPath = './assets/images/icons/edit.svg';
+const closeIconPath = './assets/images/icons/close.svg';
 
 editLocationButton.addEventListener('click', function() {
   const locationInput = document.querySelector('.location-input');
