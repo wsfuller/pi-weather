@@ -158,8 +158,10 @@ function getWeatherIcon(weather, sunriseUnixTime, sunsetUnixTime) {
 function setTimeOfDay(sunriseUnixTime, sunsetUnixTime) {
   const date = new Date();
   const now = Math.floor(Date.now() / 1000);
-  const midnight = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-  const midnightUnixTime = Math.floor(midnight.getTime() / 1000);
+  const nextDay = new Date(date);
+  nextDay.setDate(date.getDate() + 1);
+  nextDay.setHours(0, 0, 0, 0);
+  const midnightUnixTime = Math.floor(nextDay.getTime() / 1000);
 
   const oneHour = 3600;
 
@@ -190,6 +192,7 @@ function setTimeOfDay(sunriseUnixTime, sunsetUnixTime) {
       return;
     }
   }
+
   // If evening
   if(now >= midnightUnixTime - oneHour && now <= midnightUnixTime + oneHour) {
     console.log('midnight');
