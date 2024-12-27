@@ -32,7 +32,7 @@ updateLocationButton.addEventListener('click', function() {
 });
 
 async function getLocation(city, state) {
-  const LOCATION_API_URL = `http://api.openweathermap.org/geo/1.0/direct?q=${city},${state},1&appid=${API_KEY}`;
+  const LOCATION_API_URL = `https://api.openweathermap.org/geo/1.0/direct?q=${city},${state},1&appid=${API_KEY}`;
 
   try {
     const response = await fetch(LOCATION_API_URL);
