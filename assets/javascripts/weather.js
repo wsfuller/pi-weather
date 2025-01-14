@@ -204,7 +204,11 @@ async function getForecast(lat, lon) {
             <div class="icon">
               <img src="${weatherIcon.src}" alt="${weatherIcon.alt}" />
             </div>
-            <div class="label">${Math.floor(item.main.temp)}&deg;F <br /> ${item.dt_txt.split(' ')[0].split(`${date.getFullYear()}-`)[1]}</div>
+            <div class="label">${Math.floor(item.main.temp)}&deg;F
+            <span>
+              ${item.dt_txt.split(' ')[0].split(`${date.getFullYear()}-`)[1]}
+            </span>
+            </div>
           </div>`
       )
     });
