@@ -172,8 +172,13 @@ async function getForecast(lat, lon) {
     const time = '12:00:00';
     const firstDay = date.toISOString().split('T')[0];
     const nextDay = new Date(new Date().setDate(new Date().getDate() + (i + 1))).toISOString().split('T')[0];
-    return i === 0 ? `${firstDay} ${time}` : `${nextDay} ${time}`;
-  });
+
+    if (i > 0) {
+      return `${nextDay} ${time}`;
+    } else {
+      return [`${firstDay} ${time}`, `${nextDay} ${time}`];
+    }
+  }).flat();
   const forecastElement = document.querySelector('#forecast');
 
   forecastElement.innerHTML = '';
@@ -199,7 +204,7 @@ async function getForecast(lat, lon) {
     forecast.forEach((item) => {
       const weatherIcon = getWeatherIcon(item.weather[0], null, null);
 
-      forecastElement.insertAdjacentHTML('afterbegin',
+      forecastElement.insertAdjacentHTML('beforeend',
         `<div class="icon-stack">
             <div class="icon">
               <img src="${weatherIcon.src}" alt="${weatherIcon.alt}" />
@@ -229,26 +234,17 @@ function setTimeOfDay(sunriseUnixTime, sunsetUnixTime) {
 
   // If daytime
   if (now >= sunriseUnixTime - oneHour && now < sunsetUnixTime + oneHour) {
-    console.log('daytime');
-    console.log('now', now);
     // Sunrise +/- 1 hour
     if (now >= sunriseUnixTime - oneHour && now <= sunriseUnixTime + oneHour) {
-      console.log('sunrise');
-      console.log('now', now);
-
       document.body.className = "";
       document.body.classList.add('sunrise');
       return;
     } else if (now >= sunsetUnixTime - oneHour && now <= sunsetUnixTime + oneHour) {
       // Sunset +/- 1 hour
-      console.log('sunset');
-      console.log('now', now);
       document.body.className = "";
       document.body.classList.add('sunset');
       return;
     } else {
-      console.log('noon');
-      console.log('now', now);
       document.body.className = "";
       document.body.classList.add('noon');
       return;
@@ -257,14 +253,10 @@ function setTimeOfDay(sunriseUnixTime, sunsetUnixTime) {
 
   // If evening
   if(now >= midnightUnixTime - oneHour && now <= midnightUnixTime + oneHour) {
-    console.log('midnight');
-    console.log('now', now);
     document.body.className = "";
     document.body.classList.add('midnight');
     return;
   } else if (now >= sunsetUnixTime + oneHour) {
-    console.log('evening');
-    console.log('now', now);
     document.body.className = "";
     document.body.classList.add('nighttime');
     return;
