@@ -54,6 +54,7 @@
         <div class="temperature-container">
           <div class="weather-icon-container">
             <img id="weather-icon" src="./assets/images/icons/cloudy.svg" />
+            <p id="weather-description"></p>
           </div>
           <div id="main-temperature"></div>
           <div class="meta-temperatures">
@@ -74,18 +75,19 @@
         <div class="sunrise-sunset">
           <div id="sunrise" class="icon-stack">
             <div class="icon">
-              <img src="./assets/images/icons/sunrise.svg" alt="" />
+              <img src="./assets/images/icons/sunrise.svg" alt="sunrise" />
             </div>
-            <div class="label"></div>
+            <div class="label compact"></div>
           </div>
           <div id="sunset" class="icon-stack">
             <div class="icon">
-              <img src="./assets/images/icons/sunset.svg" />
+              <img src="./assets/images/icons/sunset.svg" alt="sunset" />
             </div>
-            <div class="label"></div>
+            <div class="label compact"></div>
           </div>
         </div>
 
+        <div id="forecast"></div>
 
         <div id="location">
           <span class="city">Seattle,</span>

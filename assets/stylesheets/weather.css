@@ -13,8 +13,20 @@
 }
 
 .weather-icon-container {
+  position: relative;
   width: 5rem;
   height: 5rem;
+}
+
+#weather-description {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  font-size: .65rem;
+  font-style: italic;
+  text-align: center;
+  text-transform: capitalize;
+  white-space: nowrap;
 }
 
 .meta-temperatures {
@@ -43,6 +55,7 @@
   display: flex;
   justify-content: space-between;
   width: 100%;
+  margin-bottom: 0.25rem;
 }
 
 .icon-stack {
@@ -54,12 +67,31 @@
 
 .icon-stack .icon {
   width: 4rem;
-  height: 3rem;
+  height: 4rem;
   margin: auto;
 }
 
 .icon-stack .label {
   font-size: 1.25rem;
+  text-align: center;
+}
+
+.icon-stack .label.compact {
+  margin-top: -1rem;
+}
+
+#forecast {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 1rem;
+}
+
+#forecast .icon-stack {
+  margin-right: 1rem;
+}
+
+#forecast .icon-stack:last-child {
+  margin-right: 0;
 }
 
 #location {

@@ -1,5 +1,7 @@
 (async function(){
 const API_KEY = '00ffe67401ef889e85434ae98183c43e';
+const DEFAULT_LAT = 47.6038321;
+const DEFAULT_LON = -122.330062;
 
 const editLocationButton = document.querySelector('#edit-location-button');
 const editLocationIcon = document.querySelector('#edit-location-icon');
@@ -63,14 +65,13 @@ async function getLocation(city, state) {
 }
 
 async function getWeather(lat, lon) {
-  const DEFAULT_LAT = 47.6038321;
-  const DEFAULT_LON = -122.330062;
   const LAT = lat || DEFAULT_LAT;
   const LON = lon || DEFAULT_LON;
   const WEATHER_API_URL = `https://api.openweathermap.org/data/2.5/weather?lat=${LAT}&lon=${LON}&appid=${API_KEY}&units=imperial`;
-
   try {
     const response = await fetch(WEATHER_API_URL);
+    getForecast(LAT, LON);
+
     if (!response.ok) {
       throw new Error(`Response status: ${response.status}`);
     }
@@ -82,21 +83,27 @@ async function getWeather(lat, lon) {
     const maxTemperature = Math.floor(json.main.temp_max);
     const feelsLikeTemperature = Math.floor(json.main.feels_like);
 
+    const convertedSunrise = convertUnixTime(json.sys.sunrise);
+    const convertedSunset = convertUnixTime(json.sys.sunset);
+    const sunriseUnixTime = json.sys.sunrise;
+    const sunsetUnixTime = json.sys.sunset;
+
+    const iconElement = document.querySelector('#weather-icon');
+    const weatherIcon = getWeatherIcon(json.weather[0], sunriseUnixTime, sunsetUnixTime);
+
+    iconElement.src = weatherIcon.src;
+    iconElement.alt = weatherIcon.alt;
+
     document.querySelector('#main-temperature').innerHTML = `${mainTemperature}&deg;F`;
     document.querySelector('#min-temperature').innerHTML = `${minTemperature}&deg;F`;
     document.querySelector('#feels-like-temperature').innerHTML = `${feelsLikeTemperature}&deg;F`;
     document.querySelector('#max-temperature').innerHTML = `${maxTemperature}&deg;F`;
 
-    const convertedSunrise = convertUnixTime(json.sys.sunrise);
-    const convertedSunset = convertUnixTime(json.sys.sunset);
-
     document.querySelector('#sunrise > .label').innerHTML = convertedSunrise;
     document.querySelector('#sunset > .label').innerHTML = convertedSunset;
 
-    const sunriseUnixTime = json.sys.sunrise;
-    const sunsetUnixTime = json.sys.sunset;
+    document.querySelector('#weather-description').innerHTML = json.weather[0].description;
 
-    getWeatherIcon(json.weather[0], sunriseUnixTime, sunsetUnixTime);
     setTimeOfDay(sunriseUnixTime, sunsetUnixTime);
 
   } catch (error) {
@@ -107,51 +114,102 @@ async function getWeather(lat, lon) {
   setTimeout(getWeather, 30 * 60 * 1000);
 }
 
+// Update this to only return the icon path. Description should be handled out side of this
 function getWeatherIcon(weather, sunriseUnixTime, sunsetUnixTime) {
   const iconPath = './assets/images/icons/';
-  const iconElement = document.querySelector('#weather-icon');
   const timeNow = Date.now() / 1000;
+  const sunrise = sunriseUnixTime;
+  const sunset = sunsetUnixTime;
+  const isDaytime = sunrise === null || sunset === null || timeNow > sunrise && timeNow < sunset;
+  const imageObject = {
+    alt: weather.description,
+    src: ''
+  }
 
   switch (weather.main){
     case 'Clear':
-      if (timeNow > sunriseUnixTime  && timeNow < sunsetUnixTime) {
-        iconElement.src = `${iconPath}clear-day.svg`;
+      if (isDaytime) {
+        imageObject.src = `${iconPath}clear-day.svg`;
       } else {
-        iconElement.src = `${iconPath}clear-night.svg`;
+        imageObject.src = `${iconPath}clear-night.svg`;
       }
-      iconElement.alt = weather.description;
       break;
     case 'Clouds':
-      iconElement.src = `${iconPath}cloudy.svg`;
-      iconElement.alt = weather.description;
+      imageObject.src = `${iconPath}cloudy.svg`;
       break;
     case 'Drizzle':
-      iconElement.src = `${iconPath}drizzle.svg`;
-      iconElement.alt = weather.description;
+      imageObject.src = `${iconPath}drizzle.svg`;
       break;
     case 'Fog':
-      iconElement.src = `${iconPath}fog.svg`;
-      iconElement.alt = weather.description;
+      imageObject.src = `${iconPath}fog.svg`;
       break;
+    case 'Haze':
+      imageObject.src = `${iconPath}haze.svg`;
     case 'Mist':
-      iconElement.src = `${iconPath}mist.svg`;
-      iconElement.alt = weather.description;
+      imageObject.src = `${iconPath}mist.svg`;
       break;
     case 'Rain':
-      iconElement.src = `${iconPath}rain.svg`;
-      iconElement.alt = weather.description;
+      imageObject.src = `${iconPath}rain.svg`;
       break;
     case 'Snow':
-      iconElement.src = `${iconPath}snow.svg`;
-      iconElement.alt = weather.description;
+      imageObject.src = `${iconPath}snow.svg`;
       break;
     case 'Thunderstorm':
-      iconElement.src = `${iconPath}thunderstorms-rain.svg`;
-      iconElement.alt = weather.description;
+      imageObject.src = `${iconPath}thunderstorms-rain.svg`;
       break;
     default:
-       iconElement.src = `${iconPath}not-available.svg`;
-       iconElement.alt = 'not available';
+      imageObject.src = `${iconPath}not-available.svg`;
+      imageObject.alt = 'not available';
+  }
+
+  return imageObject;
+}
+
+async function getForecast(lat, lon) {
+  const WEATHER_API_URL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=imperial`;
+  const date = new Date();
+  const forecastDatesToFind = Array.from({ length: 5 }, (_, i) => {
+    const time = '12:00:00';
+    const firstDay = date.toISOString().split('T')[0];
+    const nextDay = new Date(new Date().setDate(new Date().getDate() + (i + 1))).toISOString().split('T')[0];
+    return i === 0 ? `${firstDay} ${time}` : `${nextDay} ${time}`;
+  });
+  const forecastElement = document.querySelector('#forecast');
+
+  forecastElement.innerHTML = '';
+
+  /* Forecast data is every 3 hours for each array item. Find the index for the next 5 days at 12 noon.
+  [0] day 0 (today)
+  [1] ~ [8] day 1 (tomorrow)
+  [9] ~ [13] day 2 (day after tomorrow)
+  [14] ~ [21] day 3,
+  [22] ~ [30] day 4
+  [31] ~ [39] day 5 (last day)
+  */
+
+  try {
+    const response = await fetch(WEATHER_API_URL);
+    if (!response.ok) {
+      throw new Error(`Response status: ${response.status}`);
+    }
+
+    const json = await response.json();
+    const forecast = json.list.filter((item) => forecastDatesToFind.includes(item.dt_txt));
+
+    forecast.forEach((item) => {
+      const weatherIcon = getWeatherIcon(item.weather[0], null, null);
+
+      forecastElement.insertAdjacentHTML('afterbegin',
+        `<div class="icon-stack">
+            <div class="icon">
+              <img src="${weatherIcon.src}" alt="${weatherIcon.alt}" />
+            </div>
+            <div class="label">${Math.floor(item.main.temp)}&deg;F <br /> ${item.dt_txt.split(' ')[0].split(`${date.getFullYear()}-`)[1]}</div>
+          </div>`
+      )
+    });
+  } catch (error) {
+    console.error(error.message);
   }
 }
 
